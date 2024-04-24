@@ -1,0 +1,68 @@
+train_dataset: 
+  start_idx: 550
+  num_train_examples: 2000
+  save_dir: "inpaint_nn/dataset/train_data.pt"
+  load_dir: "inpaint_nn/dataset/train_data.pt"
+
+valid_dataset: 
+  start_idx: 500
+  num_train_examples: 50
+  save_dir: "inpaint_nn/dataset/valid_data.pt"
+  load_dir: "inpaint_nn/dataset/valid_data.pt"
+
+test_dataset: 
+  start_idx: 0
+  num_train_examples: 500
+  save_dir: "inpaint_nn/dataset/test_data.pt"
+  load_dir: "inpaint_nn/dataset/test_data.pt" 
+
+train_dataloader:
+  batch_size: 64
+  num_workers: 24
+  shuffle: True
+
+valid_dataloader:
+  batch_size: 64
+  num_workers: 24
+  shuffle: False
+
+test_dataloader:
+  batch_size: 64
+  num_workers: 24
+  shuffle: False
+
+model:
+
+optimizer:
+  lr: 0.001
+
+lr_scheduler:
+  T_max: 100
+
+trainer:
+  accelerator: "gpu"
+  max_epochs: 100
+  check_val_every_n_epoch: 1
+
+logger: 
+  save_dir: "inpaint_nn"
+  name: "lightning_logs"
+
+callbacks:
+  model_checkpoint:
+    monitor: "valid_loss"
+    mode: "min"
+    save_top_k: 3
+    save_last: True
+    filename: "{epoch}-{valid_loss:.2f}"
+    dirpath: "inpaint_nn/checkpoints"
+  early_stopping:
+    monitor: "valid_loss"
+    mode: "min"
+    patience: 10
+    verbose: True
+
+last_checkpoint: Null
+
+
+

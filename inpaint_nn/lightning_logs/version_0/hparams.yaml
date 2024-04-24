@@ -1,0 +1,5 @@
+lr_configs:
+  T_max: 100
+model_config: null
+optimizer_config:
+  lr: 0.001
